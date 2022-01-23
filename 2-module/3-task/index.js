@@ -1,16 +1,18 @@
 let calculator = {
 
   read (a, b) {
-  calculator.firstNum = a;
-  calculator.secondNum = b;
+     this.firstNum = a;
+     this.secondNum = b;
   },
+
   sum() {
-  let sum = this.firstNum + this.secondNum;
-  return sum;
+     let sum = this.firstNum + this.secondNum;
+     return sum;
   },
+
   mul() {
-  let mul = this.firstNum * this.secondNum;
-  return mul;
+     let mul = this.firstNum * this.secondNum;
+     return mul;
   }
   };
 
