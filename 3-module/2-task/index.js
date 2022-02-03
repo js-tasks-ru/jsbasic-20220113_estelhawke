@@ -1,6 +1,6 @@
 function filterRange(arr, a, b) {
   
-  return filterResult = arr.filter(function(item){ 
-    return item >= a && item <= b; })
+  return arr.filter(item => item <= b && item >= a);
+  
 };
 
