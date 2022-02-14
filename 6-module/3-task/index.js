@@ -72,7 +72,7 @@ export default class Carousel {
 
     let sliderBelt = this.mainCarousel.querySelector(".carousel__inner");
 
-    let sliderHolder =  document.querySelector(".container");
+    let sliderHolder =  this.mainCarousel;
 
     let arrowRight = this.mainCarousel.querySelector(".carousel__arrow_right");
   
