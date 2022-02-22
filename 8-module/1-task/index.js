@@ -34,11 +34,48 @@ export default class CartIcon {
   }
 
   addEventListeners() {
-    document.addEventListener('scroll', () => this.updatePosition());
+    let initialTopCoord = this.elem.getBoundingClientRect().top + window.pageYOffset;
+    document.addEventListener('scroll', () => this.updatePosition(initialTopCoord));
     window.addEventListener('resize', () => this.updatePosition());
   }
 
-  updatePosition() {
-    // ваш код ...
-  }
+  updatePosition(initialTopCoord) {
+     // корзина при экране меньше 767
+     let mobileDevice = document.documentElement.clientWidth; 
+     if (mobileDevice <= 767) {
+       this.elem.style.position = '';
+       this.elem.style.zIndex = '';
+       this.elem.style.right = '';
+       this.elem.style.left = '';
+       return;
+      };
+
+    
+    if (window.pageYOffset > initialTopCoord) {
+      this.elem.style.position = 'fixed'; // ставим корзине фиксированное положение
+
+      let containerElem = document.querySelector(".container");
+
+      if((containerElem.getBoundingClientRect().right + 100) > document.documentElement.clientWidth){ //если меню занимает всю ширину страницы
+
+        this.elem.style.right = 10 +'px'; //  10px от правой границы окна
+        this.elem.style.zIndex = 10; // ставим видимость для корзины поверх меню
+
+      } else {  // если меню не занимает всю ширину страницы
+      this.elem.style.left = containerElem.getBoundingClientRect().right + 20 + 'px'; //  20px от элемента .container
+      };
+       
+    } else { // возвращаем все назад при прокрутке обратно вверх
+      this.elem.style.position = 'absolute';
+      this.elem.style.zIndex = '';
+      this.elem.style.right = '';
+      this.elem.style.left = '';
+
+    }; 
+
+   
 }
+}
+
+
+
