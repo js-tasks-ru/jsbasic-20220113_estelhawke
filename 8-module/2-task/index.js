@@ -15,7 +15,6 @@ export default class ProductGrid {
   createCards(products) { // отрисовка продуктов из массива с помощью класса ProductCard(6 module 2 task)
     
     this.elemGridInner.innerHTML = '';
-    console.log(this.elemGridInner)
     for(let i = 0; i < products.length; i++){
      let card = new ProductCard(products[i]);
      this.elemGridInner.append(card.elem);
@@ -26,7 +25,6 @@ export default class ProductGrid {
  updateFilter(filters) {
 
   this.filters = {...this.filters, ...filters} // прибавляем категории фильтра
-  console.log(this.filters);
 
   let filteredProducts = this.products;
 
@@ -45,16 +43,12 @@ export default class ProductGrid {
   if (this.filters.category) { //фильтр по category
     filteredProducts = filteredProducts.filter(item => item.category == this.filters.category);
   };
-    console.log(filteredProducts);
 
-    return this.createCards(filteredProducts)
+    return this.createCards(filteredProducts)  // передаем функции по отрисовке карточек новый массив
 };
 
 
  elem () {
   return this.elem;
 }
-
-
-
 }
