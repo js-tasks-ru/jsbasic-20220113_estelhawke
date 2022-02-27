@@ -15,26 +15,23 @@ export default class Cart {
       product.count + 1;
     };
 
-    for(let cartItem in this.cartItems){ 
+    for(let cartItem of this.cartItems){ 
     this.onProductUpdate(cartItem);
   }
 }
 
-  updateProductCount(productId, amount) {
-     this.cartItems.forEach(item => {
-       if (item.id == productId) { 
-        if (amount == - 1) {
-          item.count--;   // уменьшение товара на 1
-          if (item.count == 0) {
-            this.cartItems.splice(this.cartItems.indexOf(item), 1);   // удаление товара
-          };
-        } else {
-          item.count++;   // увеличение товара на 1
-        }
-      }
-    });
-    this.onProductUpdate();
+updateProductCount(productId, amount) {
+
+  let cartItem = this.cartItems.find(item => item.id == productId);
+    cartItem.count += amount;
+    
+     if (cartItem.count == 0) {
+       this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);   // удаление товара
+      };
+      
+     this.onProductUpdate(cartItem);
   }
+
 
   isEmpty() {
     if (this.cartItems.length === 0) {
