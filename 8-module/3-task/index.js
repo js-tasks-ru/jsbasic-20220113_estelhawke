@@ -8,24 +8,27 @@ export default class Cart {
   addProduct(product) {
     if (product === null || product === undefined) return; // проверка на null/undefined товар
 
-    if (!this.cartItems.includes(product)) { // проверка есть ли товар в корзине
-      product.count = 1;  // установление count : 1
-      this.cartItems.push(product); // если нет, добавление товара в корзину  
-    } else {
-      product.count + 1;
-    };
+    let cartItem = this.cartItems.find(item => item.product.id === product.id);
 
-    for(let cartItem of this.cartItems){ 
+    if (!cartItem) { // проверка есть ли товар в корзине 
+      cartItem = {
+        product,
+        count : 1 // установление count : 1
+      };
+      this.cartItems.push(cartItem); //  добавление товара в корзину  
+    } else {
+      cartItem.count + 1;
+    };
     this.onProductUpdate(cartItem);
-  }
+  
 }
 
 updateProductCount(productId, amount) {
 
-  let cartItem = this.cartItems.find(item => item.id == productId);
+  let cartItem = this.cartItems.find(item => item.product.id == productId);
     cartItem.count += amount;
     
-     if (cartItem.count == 0) {
+     if (cartItem.count === 0) {
        this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);   // удаление товара
       };
       
@@ -46,7 +49,7 @@ updateProductCount(productId, amount) {
   }
 
   getTotalPrice() {
-   return this.cartItems.reduce((totalPrice, product) => totalPrice + (product.price * product.count), 0);
+   return this.cartItems.reduce((totalPrice, product) => totalPrice + (product.product.price * product.count), 0);
  
   }
 
