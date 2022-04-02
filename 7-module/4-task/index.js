@@ -149,7 +149,6 @@ export default class StepSlider {
                 bubbles: true 
               });
               this.elem.dispatchEvent(sliderChangeEvent);
-              console.log(sliderChangeEvent)
 
               document.removeEventListener("pointermove", onMoveBind);
           }

@@ -46,9 +46,4 @@ export default class ProductGrid {
 
     return this.createCards(filteredProducts)  // передаем функции по отрисовке карточек новый массив
 };
-
-
- elem () {
-  return this.elem;
-}
 }

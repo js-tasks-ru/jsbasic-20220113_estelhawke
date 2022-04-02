@@ -64,7 +64,6 @@ export default class CartIcon {
       ) + 'px';
 
       this.elem.style.left = leftIndent;
-      this.elem.style.zIndex = 99;
        
     } else { // возвращаем все назад при прокрутке обратно вверх
       this.elem.style.position = 'absolute';

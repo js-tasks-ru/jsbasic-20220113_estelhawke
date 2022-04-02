@@ -13,7 +13,6 @@ import Cart from '../../8-module/4-task/index.js';
 export default class Main {
 
   constructor() {
-
   }
 
   async render() {
@@ -43,7 +42,7 @@ export default class Main {
  
     //получение данных с сервера
     let response = await fetch('products.json');
-    let products = response.json();
+    let products = await response.json();
 
     //рендер грид
     let productsGridHolder = document.body.querySelector('[data-products-grid-holder]');
@@ -51,8 +50,42 @@ export default class Main {
     productsGridHolder.innerHTML = '';
     productsGridHolder.append(productsGrid.elem);
 
+    // фильтрация
+    productsGrid.updateFilter({
+      noNuts: document.getElementById('nuts-checkbox').checked,
+      vegeterianOnly: document.getElementById('vegeterian-checkbox').checked,
+      maxSpiciness: stepSlider.value,
+      category: ribbonMenu.value
+    });
 
+    document.body.addEventListener('product-add', function() {
+      cart.addProduct(products.find(product => product.id == event.detail));
+      });
 
+    stepSlider.elem.addEventListener('slider-change', function(){
+      productsGrid.updateFilter({
+        maxSpiciness: event.detail
+      });
+    });
 
-  }
+    ribbonMenu.elem.addEventListener('ribbon-select', function(){
+      productsGrid.updateFilter({
+        category:  event.detail
+      });
+    });
+
+    let nutsBox = document.querySelector('#nuts-checkbox');
+    let veggBox = document.querySelector('#vegeterian-checkbox');
+
+    nutsBox.addEventListener('change', function(){
+    productsGrid.updateFilter({
+      noNuts: event.target.checked // новое значение чекбокса
+    });          
+  });
+  veggBox.addEventListener('change', function(){
+    productsGrid.updateFilter({
+      vegeterianOnly: event.target.checked // новое значение чекбокса
+    });          
+  });
+  };
 }

@@ -23,7 +23,7 @@ export default class Cart {
       };
       this.cartItems.push(cartItem); //  добавление товара в корзину  
     } else {
-      cartItem.count + 1;
+      cartItem.count = cartItem.count + 1;
     };
     this.onProductUpdate(cartItem);
   
@@ -132,10 +132,12 @@ updateProductCount(productId, amount) {
           this.updateProductCount(productToMinus, amount);
       }
     };
-    let cartOnSubmit = this.modalBody.querySelector('.cart-form');
-    cartOnSubmit.onsubmit = (event) => this.onSubmit(event); // вешаем обработчик onsubmit 
   });
     this.modalBody.appendChild(this.renderOrderForm());  // прикрепляем форму для заказа 
+
+        
+    let cartOnSubmit = this.modalBody.querySelector('.cart-form');
+    cartOnSubmit.onsubmit = (event) => this.onSubmit(event); // вешаем обработчик onsubmit 
 
     this.modal.setBody(this.modalBody);
     this.modal.open();
@@ -190,7 +192,9 @@ updateProductCount(productId, amount) {
    await fetch('https://httpbin.org/post', {  // ждем fetch
       method: 'POST',
       body: formData,
-    });
+
+    }).then (response => {
+      if (response.ok) {
 
       this.modal.setTitle('Success!');
       buttonSubmit.classList.remove('is-loading');
@@ -204,8 +208,9 @@ updateProductCount(productId, amount) {
         <img src="/assets/images/delivery.gif">
       </p>
     </div>
-    `;
-  };
+    `;         
+   }
+  })};
 
   addEventListeners() {
     this.cartIcon.elem.onclick = () => this.renderModal();

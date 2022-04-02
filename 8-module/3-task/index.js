@@ -17,7 +17,7 @@ export default class Cart {
       };
       this.cartItems.push(cartItem); //  добавление товара в корзину  
     } else {
-      cartItem.count + 1;
+      cartItem.count = cartItem.count + 1;
     };
     this.onProductUpdate(cartItem);
   
